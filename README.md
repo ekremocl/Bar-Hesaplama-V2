@@ -1,1 +1,1 @@
-# Bar-Hesaplama-V2
+# Bar-Hesaplama
