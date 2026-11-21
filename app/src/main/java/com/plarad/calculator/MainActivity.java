@@ -112,6 +112,10 @@ public class MainActivity extends Activity {
                             "MAX KN - NM 0 olamaz"
                     );
 
+                    result.setTextColor(
+                            0xFFFFFFFF
+                    );
+
                     return;
                 }
 
@@ -126,10 +130,33 @@ public class MainActivity extends Activity {
                         )
                 );
 
+                if (calculatedBar < 100) {
+
+                    result.setTextColor(
+                            0xFF00FF88
+                    );
+
+                } else if (calculatedBar < 300) {
+
+                    result.setTextColor(
+                            0xFFFFA500
+                    );
+
+                } else {
+
+                    result.setTextColor(
+                            0xFFFF4444
+                    );
+                }
+
             } catch (Exception e) {
 
                 result.setText(
                         "Gecersiz deger"
+                );
+
+                result.setTextColor(
+                        0xFFFFFFFF
                 );
             }
         });
