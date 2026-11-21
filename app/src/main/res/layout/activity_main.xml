@@ -157,6 +157,7 @@
         android:layout_gravity="start"
         android:background="#FFFFFF"
         app:itemIconTint="@null"
+        app:itemIconSize="42dp"
         app:menu="@menu/drawer_menu" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

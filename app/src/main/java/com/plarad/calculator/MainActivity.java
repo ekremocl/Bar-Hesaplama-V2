@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         navigationView =
                 findViewById(R.id.navigationView);
+        navigationView.setItemIconTintList(null);
 
         menuButton =
                 findViewById(R.id.menuButton);
