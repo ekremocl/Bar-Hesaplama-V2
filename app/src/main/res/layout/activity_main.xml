@@ -31,13 +31,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Hydraulic Pressure&#10;Calculator"
+                android:text="Hydraulic Pressure Calculator"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:textAlignment="center"
-                android:lineSpacingExtra="4dp"/>
+                android:lineSpacingExtra="4dp" />
 
         </LinearLayout>
 
@@ -54,7 +54,7 @@
                 android:text="D4K PDF"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#1565C0"/>
+                android:backgroundTint="#1565C0" />
 
             <Button
                 android:id="@+id/openD3K"
@@ -64,7 +64,7 @@
                 android:text="D3K PDF"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#1565C0"/>
+                android:backgroundTint="#1565C0" />
 
             <Button
                 android:id="@+id/openITH"
@@ -74,7 +74,7 @@
                 android:text="ITH TORK CHART"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#1565C0"/>
+                android:backgroundTint="#1565C0" />
 
         </LinearLayout>
 
@@ -82,30 +82,30 @@
             android:id="@+id/maxBar"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:hint="MAX BAR"
+            android:hint="SİLİNDİR-KASET MAX BAR"
             android:background="#FFFFFF"
             android:gravity="center"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
 
         <EditText
             android:id="@+id/instruction"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:hint="INSTRUCTION KN - NM"
+            android:hint="INSTRUCTION KN-NM"
             android:background="#FFFFFF"
             android:gravity="center"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
 
         <EditText
             android:id="@+id/maxKn"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:hint="MAX KN - NM"
+            android:hint="SİLİNDİR-KASET MAX KN-NM"
             android:background="#FFFFFF"
             android:gravity="center"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal" />
 
         <Button
             android:id="@+id/calculate"
@@ -115,7 +115,7 @@
             android:text="HESAPLA"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
-            android:backgroundTint="#1565C0"/>
+            android:backgroundTint="#1565C0" />
 
         <LinearLayout
             android:layout_width="320dp"
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:text="RESULT"
                 android:textColor="#FFFFFF"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/result"
@@ -140,7 +140,7 @@
                 android:text="0.00 BAR"
                 android:textColor="#00FF88"
                 android:textSize="42sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
