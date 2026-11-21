@@ -147,6 +147,16 @@
                     android:textSize="34sp"
                     android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/clearHistory"
+                    android:layout_width="200dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
+                    android:text="GEÇMİŞİ TEMİZLE"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#B71C1C" />
+
                 <TextView
                     android:id="@+id/history"
                     android:layout_width="match_parent"
