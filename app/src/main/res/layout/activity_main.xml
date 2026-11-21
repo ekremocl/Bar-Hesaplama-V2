@@ -38,7 +38,9 @@
                     android:text="D4K Screw Connections"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:backgroundTint="#1565C0" />
+                    android:backgroundTint="#1565C0"
+                    android:drawableStart="@drawable/pdf_icon"
+                    android:drawablePadding="8dp" />
 
                 <Button
                     android:id="@+id/openD3K"
@@ -48,7 +50,9 @@
                     android:text="D3K Screw Connections"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:backgroundTint="#1565C0" />
+                    android:backgroundTint="#1565C0"
+                    android:drawableStart="@drawable/pdf_icon"
+                    android:drawablePadding="8dp" />
 
                 <Button
                     android:id="@+id/openITH"
@@ -58,7 +62,9 @@
                     android:text="ITH Tork Chart"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
-                    android:backgroundTint="#1565C0" />
+                    android:backgroundTint="#1565C0"
+                    android:drawableStart="@drawable/pdf_icon"
+                    android:drawablePadding="8dp" />
 
             </LinearLayout>
 
