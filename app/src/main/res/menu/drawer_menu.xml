@@ -4,15 +4,18 @@
 
     <item
         android:id="@+id/nav_d4k"
-        android:title="📄 D4K Screw Connections" />
+        android:icon="@drawable/pdf_icon"
+        android:title="D4K Screw Connections" />
 
     <item
         android:id="@+id/nav_d3k"
-        android:title="📄 D3K Screw Connections" />
+        android:icon="@drawable/pdf_icon"
+        android:title="D3K Screw Connections" />
 
     <item
         android:id="@+id/nav_ith"
-        android:title="📄 ITH Tork Chart" />
+        android:icon="@drawable/pdf_icon"
+        android:title="ITH Tork Chart" />
 
     <item
         android:id="@+id/nav_clear_history"
