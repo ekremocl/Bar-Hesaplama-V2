@@ -28,15 +28,15 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:background="#88000000"
-                android:padding="16dp">
+                android:padding="10dp">
 
                 <Button
                     android:id="@+id/menuButton"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
                     android:layout_gravity="start"
                     android:text="☰"
-                    android:textSize="24sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
                     android:backgroundTint="#1565C0" />
@@ -44,7 +44,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="8dp"
                     android:hint="Silindir / Kaset Maks. Basınç (bar)"
                     app:boxBackgroundColor="#F5F7FA"
                     app:boxBackgroundMode="outline"
@@ -72,7 +72,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="8dp"
                     android:hint="Instruction Değeri (KN ve NM)"
                     app:boxBackgroundColor="#F5F7FA"
                     app:boxBackgroundMode="outline"
@@ -100,7 +100,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp"
+                    android:layout_marginTop="8dp"
                     android:hint="Silindir / Kaset Maks. Tork (KN ve NM)"
                     app:boxBackgroundColor="#F5F7FA"
                     app:boxBackgroundMode="outline"
@@ -127,21 +127,21 @@
 
                 <Button
                     android:id="@+id/calculate"
-                    android:layout_width="300dp"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="10dp"
                     android:text="HESAPLA"
                     android:textStyle="bold"
                     android:textColor="#FFFFFF"
                     android:backgroundTint="#1565C0" />
 
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="15dp"
-                    android:layout_marginTop="16dp"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/header_card">
 
                     <TextView
@@ -150,47 +150,56 @@
                         android:layout_height="wrap_content"
                         android:text="0.00 BAR"
                         android:textColor="#00FF88"
-                        android:textSize="34sp"
+                        android:textSize="30sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="16dp"
+                    android:padding="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/header_card">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="SON 5 HESAP"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:textSize="16sp" />
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
-                    <Button
-                        android:id="@+id/clearHistory"
-                        android:layout_width="200dp"
-                        android:layout_height="45dp"
-                        android:layout_marginTop="10dp"
-                        android:text="GEÇMİŞİ TEMİZLE"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"
-                        android:backgroundTint="#B71C1C" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="SON 5 HESAP"
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            android:textSize="14sp" />
+
+                        <Button
+                            android:id="@+id/clearHistory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="GEÇMİŞİ TEMİZLE"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            android:textColor="#FFFFFF"
+                            android:backgroundTint="#B71C1C" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/history"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="4dp"
                         android:text=""
                         android:textColor="#FFFFFF"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:gravity="center" />
 
                 </LinearLayout>

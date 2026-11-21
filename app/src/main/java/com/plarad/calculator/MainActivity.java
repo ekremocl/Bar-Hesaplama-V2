@@ -101,18 +101,6 @@ public class MainActivity extends AppCompatActivity {
                         "ITH Tork Chart.pdf"
                 );
 
-            } else if (id == R.id.nav_clear_history) {
-
-                historyList.clear();
-
-                history.setText("");
-
-                Toast.makeText(
-                        MainActivity.this,
-                        "History Cleared",
-                        Toast.LENGTH_SHORT
-                ).show();
-
             } else if (id == R.id.nav_about) {
 
                 Toast.makeText(
