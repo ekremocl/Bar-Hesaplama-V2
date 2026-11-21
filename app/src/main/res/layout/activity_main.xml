@@ -53,7 +53,8 @@
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
                     app:boxStrokeColor="#1565C0"
-                    app:hintTextColor="#526176">
+                    app:hintTextAppearance="@style/CalculatorInputLabel"
+                    app:hintTextColor="#26364A">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/maxBar"
@@ -61,7 +62,9 @@
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionNext"
-                        android:textColor="#172033" />
+                        android:textColor="#172033"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,7 +80,8 @@
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
                     app:boxStrokeColor="#1565C0"
-                    app:hintTextColor="#526176">
+                    app:hintTextAppearance="@style/CalculatorInputLabel"
+                    app:hintTextColor="#26364A">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/instruction"
@@ -85,7 +89,9 @@
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionNext"
-                        android:textColor="#172033" />
+                        android:textColor="#172033"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,7 +107,8 @@
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
                     app:boxStrokeColor="#1565C0"
-                    app:hintTextColor="#526176">
+                    app:hintTextAppearance="@style/CalculatorInputLabel"
+                    app:hintTextColor="#26364A">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/maxKn"
@@ -109,7 +116,9 @@
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionDone"
-                        android:textColor="#172033" />
+                        android:textColor="#172033"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
