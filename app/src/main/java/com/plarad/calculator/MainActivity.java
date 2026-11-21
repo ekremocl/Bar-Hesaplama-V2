@@ -130,23 +130,23 @@ public class MainActivity extends Activity {
                         )
                 );
 
-                if (calculatedBar < 100) {
-
-                    result.setTextColor(
-                            0xFF00FF88
-                    );
-
-                } else if (calculatedBar < 300) {
+                if (calculatedBar < 500) {
 
                     result.setTextColor(
                             0xFFFFA500
-                    );
+                    ); // Turuncu
+
+                } else if (calculatedBar < 1000) {
+
+                    result.setTextColor(
+                            0xFF00FF88
+                    ); // Yeşil
 
                 } else {
 
                     result.setTextColor(
                             0xFFFF4444
-                    );
+                    ); // Kırmızı
                 }
 
             } catch (Exception e) {
