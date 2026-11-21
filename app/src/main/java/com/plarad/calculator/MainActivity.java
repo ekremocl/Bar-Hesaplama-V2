@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends Activity {
 
     private EditText maxBar;
@@ -23,9 +25,10 @@ public class MainActivity extends Activity {
     private Button openD4K;
     private Button openD3K;
     private Button openITH;
+    private Button clearHistory;
 
-    private final StringBuilder calculationHistory =
-            new StringBuilder();
+    private final ArrayList<String> historyList =
+            new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,9 @@ public class MainActivity extends Activity {
 
         result = findViewById(R.id.result);
         history = findViewById(R.id.history);
+
+        clearHistory =
+                findViewById(R.id.clearHistory);
 
         calculate = findViewById(R.id.calculate);
 
@@ -95,6 +101,13 @@ public class MainActivity extends Activity {
             startActivity(intent);
         });
 
+        clearHistory.setOnClickListener(v -> {
+
+            historyList.clear();
+
+            history.setText("");
+        });
+
         calculate.setOnClickListener(v -> {
 
             hideKeyboard();
@@ -140,35 +153,52 @@ public class MainActivity extends Activity {
                         )
                 );
 
-                calculationHistory.insert(
+                historyList.add(
                         0,
                         String.format(
-                                "%.2f BAR\n",
+                                "%.2f BAR",
                                 calculatedBar
                         )
                 );
 
+                while (historyList.size() > 5) {
+
+                    historyList.remove(
+                            historyList.size() - 1
+                    );
+                }
+
+                StringBuilder historyText =
+                        new StringBuilder();
+
+                for (String item : historyList) {
+
+                    historyText
+                            .append(item)
+                            .append("\n");
+                }
+
                 history.setText(
-                        calculationHistory.toString()
+                        historyText.toString()
                 );
 
                 if (calculatedBar < 500) {
 
                     result.setTextColor(
                             0xFFFFA500
-                    );
+                    ); // Turuncu
 
                 } else if (calculatedBar < 1000) {
 
                     result.setTextColor(
                             0xFF00FF88
-                    );
+                    ); // Yeşil
 
                 } else {
 
                     result.setTextColor(
                             0xFFFF4444
-                    );
+                    ); // Kırmızı
                 }
 
             } catch (Exception e) {
