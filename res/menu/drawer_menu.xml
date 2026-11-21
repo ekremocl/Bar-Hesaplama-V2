@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_d4k"
+        android:title="D4K Screw Connections" />
+
+    <item
+        android:id="@+id/nav_d3k"
+        android:title="D3K Screw Connections" />
+
+    <item
+        android:id="@+id/nav_ith"
+        android:title="ITH Tork Chart" />
+
+    <item
+        android:id="@+id/nav_clear_history"
+        android:title="Clear History" />
+
+    <item
+        android:id="@+id/nav_about"
+        android:title="About" />
+
+</menu>
