@@ -1,6 +1,5 @@
 package com.plarad.calculator;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,15 +12,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private EditText maxBar;
-    private EditText instruction;
+    private TextInputEditText instruction;
     private EditText maxKn;
 
     private TextView result;
@@ -49,6 +50,7 @@ public class MainActivity extends Activity {
 
         navigationView =
                 findViewById(R.id.navigationView);
+        navigationView.setItemIconTintList(null);
 
         menuButton =
                 findViewById(R.id.menuButton);
@@ -100,18 +102,6 @@ public class MainActivity extends Activity {
                         "ITH Tork Chart.pdf"
                 );
 
-            } else if (id == R.id.nav_clear_history) {
-
-                historyList.clear();
-
-                history.setText("");
-
-                Toast.makeText(
-                        MainActivity.this,
-                        "History Cleared",
-                        Toast.LENGTH_SHORT
-                ).show();
-
             } else if (id == R.id.nav_about) {
 
                 Toast.makeText(
@@ -140,25 +130,13 @@ public class MainActivity extends Activity {
             try {
 
                 double maxBarValue =
-                        Double.parseDouble(
-                                maxBar
-                                        .getText()
-                                        .toString()
-                        );
+                        parseNumber(maxBar);
 
                 double instructionValue =
-                        Double.parseDouble(
-                                instruction
-                                        .getText()
-                                        .toString()
-                        );
+                        parseNumber(instruction);
 
                 double maxKnValue =
-                        Double.parseDouble(
-                                maxKn
-                                        .getText()
-                                        .toString()
-                        );
+                        parseNumber(maxKn);
 
                 if (maxKnValue == 0) {
 
@@ -244,6 +222,15 @@ public class MainActivity extends Activity {
                 );
             }
         });
+    }
+
+    private double parseNumber(EditText input) {
+        return Double.parseDouble(
+                input.getText()
+                        .toString()
+                        .trim()
+                        .replace(',', '.')
+        );
     }
 
     private void openPdf(String pdfName) {
