@@ -46,14 +46,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:hint="Silindir / Kaset Maks. Basınç (bar)"
-                    app:boxBackgroundColor="#CC111827"
+                    app:boxBackgroundColor="#F5F7FA"
                     app:boxBackgroundMode="outline"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="#80CBC4"
-                    app:hintTextColor="#B0BEC5">
+                    app:boxStrokeColor="#1565C0"
+                    app:hintTextColor="#526176">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/maxBar"
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionNext"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#172033" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -69,15 +69,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:hint="Uygulama Torku (kN·m)"
-                    app:boxBackgroundColor="#CC111827"
+                    android:hint="Instruction Değeri (KN ve NM)"
+                    app:boxBackgroundColor="#F5F7FA"
                     app:boxBackgroundMode="outline"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="#80CBC4"
-                    app:hintTextColor="#B0BEC5">
+                    app:boxStrokeColor="#1565C0"
+                    app:hintTextColor="#526176">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/instruction"
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionNext"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#172033" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,15 +93,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:hint="Silindir / Kaset Maks. Tork (kN·m)"
-                    app:boxBackgroundColor="#CC111827"
+                    android:hint="Silindir / Kaset Maks. Tork (KN ve NM)"
+                    app:boxBackgroundColor="#F5F7FA"
                     app:boxBackgroundMode="outline"
                     app:boxCornerRadiusBottomEnd="12dp"
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
-                    app:boxStrokeColor="#80CBC4"
-                    app:hintTextColor="#B0BEC5">
+                    app:boxStrokeColor="#1565C0"
+                    app:hintTextColor="#526176">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/maxKn"
@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
                         android:imeOptions="actionDone"
-                        android:textColor="#FFFFFF" />
+                        android:textColor="#172033" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
