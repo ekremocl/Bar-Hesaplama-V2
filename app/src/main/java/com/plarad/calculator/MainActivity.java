@@ -2,11 +2,14 @@ package com.plarad.calculator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,6 +25,7 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -240,14 +244,14 @@ public class MainActivity extends AppCompatActivity {
 
         addInstructionOptions(
                 options,
-                "D4K",
-                R.array.d4k_instruction_values
+                "D4K Screw Connections.pdf",
+                R.array.d4k_instruction_options
         );
 
         addInstructionOptions(
                 options,
-                "D3K",
-                R.array.d3k_instruction_values
+                "D3K Screw Connections.pdf",
+                R.array.d3k_instruction_options
         );
 
         ArrayAdapter<InstructionOption> adapter =
@@ -255,7 +259,46 @@ public class MainActivity extends AppCompatActivity {
                         this,
                         android.R.layout.simple_dropdown_item_1line,
                         options
-                );
+                ) {
+                    @Override
+                    public boolean areAllItemsEnabled() {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean isEnabled(int position) {
+                        InstructionOption option = getItem(position);
+                        return option != null && !option.isHeader;
+                    }
+
+                    @Override
+                    public View getDropDownView(
+                            int position,
+                            View convertView,
+                            ViewGroup parent
+                    ) {
+                        TextView row = (TextView) super.getDropDownView(
+                                position,
+                                convertView,
+                                parent
+                        );
+                        InstructionOption option = getItem(position);
+                        boolean isHeader =
+                                option != null && option.isHeader;
+
+                        row.setTypeface(
+                                null,
+                                isHeader ? Typeface.BOLD : Typeface.NORMAL
+                        );
+                        row.setTextColor(
+                                isHeader ? 0xFF1D3557 : 0xFF172033
+                        );
+                        row.setBackgroundColor(
+                                isHeader ? 0xFFE5EDF8 : Color.WHITE
+                        );
+                        return row;
+                    }
+                };
 
         instruction.setAdapter(adapter);
         instruction.setThreshold(0);
@@ -264,9 +307,15 @@ public class MainActivity extends AppCompatActivity {
             InstructionOption option =
                     (InstructionOption) parent.getItemAtPosition(position);
 
+            if (option.isHeader) {
+                return;
+            }
+
             instruction.setText(option.value, false);
             instructionLayout.setHelperText(
-                    "Seçilen kaynak: " + option.model
+                    "Kaynak: " + option.sourceName
+                            + " • Bölüm: " + option.section
+                            + " • Vida: " + option.fastener
             );
         });
 
@@ -298,13 +347,42 @@ public class MainActivity extends AppCompatActivity {
 
     private void addInstructionOptions(
             ArrayList<InstructionOption> options,
-            String model,
+            String sourceName,
             int valuesResource
     ) {
-        for (String value : getResources().getStringArray(valuesResource)) {
+        for (String encodedSection : getResources().getStringArray(valuesResource)) {
+            String[] sectionParts = encodedSection.split("\\|", 2);
+            if (sectionParts.length != 2) {
+                throw new IllegalStateException(
+                        "Invalid torque option section: " + encodedSection
+                );
+            }
+
+            String section = sectionParts[0];
             options.add(
-                    new InstructionOption(model, value)
+                    InstructionOption.header(sourceName, section)
             );
+
+            HashSet<String> sectionOptions = new HashSet<>();
+            for (String encodedOption : sectionParts[1].split(",")) {
+                String[] optionParts = encodedOption.split("@", 2);
+                if (optionParts.length != 2) {
+                    throw new IllegalStateException(
+                            "Invalid torque option: " + encodedOption
+                    );
+                }
+
+                if (sectionOptions.add(encodedOption)) {
+                    options.add(
+                            InstructionOption.value(
+                                    sourceName,
+                                    section,
+                                    optionParts[0],
+                                    optionParts[1]
+                            )
+                    );
+                }
+            }
         }
     }
 
@@ -318,17 +396,60 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static class InstructionOption {
-        private final String model;
+        private final String sourceName;
+        private final String section;
+        private final String fastener;
         private final String value;
+        private final boolean isHeader;
 
-        private InstructionOption(String model, String value) {
-            this.model = model;
+        private InstructionOption(
+                String sourceName,
+                String section,
+                String fastener,
+                String value,
+                boolean isHeader
+        ) {
+            this.sourceName = sourceName;
+            this.section = section;
+            this.fastener = fastener;
             this.value = value;
+            this.isHeader = isHeader;
+        }
+
+        private static InstructionOption header(
+                String sourceName,
+                String section
+        ) {
+            return new InstructionOption(
+                    sourceName,
+                    section,
+                    "",
+                    "",
+                    true
+            );
+        }
+
+        private static InstructionOption value(
+                String sourceName,
+                String section,
+                String value,
+                String fastener
+        ) {
+            return new InstructionOption(
+                    sourceName,
+                    section,
+                    fastener,
+                    value,
+                    false
+            );
         }
 
         @Override
         public String toString() {
-            return value + " Nm - " + model;
+            if (isHeader) {
+                return sourceName + " • " + section;
+            }
+            return value + " Nm tork — " + fastener;
         }
     }
 
