@@ -24,50 +24,6 @@
             android:background="#88000000"
             android:padding="16dp">
 
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp">
-
-                <Button
-                    android:id="@+id/openD4K"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:text="D4K Screw Connections"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#1565C0"
-                    android:drawableStart="@drawable/pdf_icon"
-                    android:drawablePadding="8dp" />
-
-                <Button
-                    android:id="@+id/openD3K"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:text="D3K Screw Connections"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#1565C0"
-                    android:drawableStart="@drawable/pdf_icon"
-                    android:drawablePadding="8dp" />
-
-                <Button
-                    android:id="@+id/openITH"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:text="ITH Tork Chart"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#1565C0"
-                    android:drawableStart="@drawable/pdf_icon"
-                    android:drawablePadding="8dp" />
-
-            </LinearLayout>
-
             <EditText
                 android:id="@+id/maxBar"
                 android:layout_width="300dp"
@@ -117,7 +73,6 @@
                 android:gravity="center"
                 android:padding="15dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
                 android:background="@drawable/header_card">
 
                 <TextView
@@ -128,6 +83,26 @@
                     android:textColor="#00FF88"
                     android:textSize="34sp"
                     android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/header_card">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SON 5 HESAP"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/clearHistory"
