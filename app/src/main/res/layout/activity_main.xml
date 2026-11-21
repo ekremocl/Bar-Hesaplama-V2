@@ -69,7 +69,8 @@
                 android:hint="SİLİNDİR-KASET MAX BAR"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:imeOptions="actionNext" />
 
             <EditText
                 android:id="@+id/instruction"
@@ -79,7 +80,8 @@
                 android:hint="INSTRUCTION KN-NM"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:imeOptions="actionNext" />
 
             <EditText
                 android:id="@+id/maxKn"
@@ -89,7 +91,8 @@
                 android:hint="SİLİNDİR-KASET MAX KN-NM"
                 android:background="#FFFFFF"
                 android:gravity="center"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:imeOptions="actionDone" />
 
             <Button
                 android:id="@+id/calculate"
