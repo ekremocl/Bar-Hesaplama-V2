@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,16 +23,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText maxBar;
     private MaterialAutoCompleteTextView instruction;
-    private TextInputLayout instructionLayout;
+    private TextView instructionDetails;
     private EditText maxKn;
 
     private TextView result;
@@ -70,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
         instruction =
                 findViewById(R.id.instruction);
 
-        instructionLayout =
-                findViewById(R.id.instructionLayout);
+        instructionDetails =
+                findViewById(R.id.instructionDetails);
 
         maxKn =
                 findViewById(R.id.maxKn);
@@ -268,7 +267,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean isEnabled(int position) {
                         InstructionOption option = getItem(position);
-                        return option != null && !option.isHeader;
+                        return option != null
+                                && !option.isHeader
+                                && option.selectable;
                     }
 
                     @Override
@@ -286,13 +287,33 @@ public class MainActivity extends AppCompatActivity {
                         boolean isHeader =
                                 option != null && option.isHeader;
 
+                        row.setSingleLine(false);
+                        row.setEllipsize(null);
+                        row.setTextSize(
+                                TypedValue.COMPLEX_UNIT_SP,
+                                isHeader ? 14 : 13
+                        );
+                        float density =
+                                getResources().getDisplayMetrics().density;
+                        int verticalPadding = (int) (8 * density);
+                        int horizontalPadding = (int) (16 * density);
+                        row.setPadding(
+                                horizontalPadding,
+                                verticalPadding,
+                                horizontalPadding,
+                                verticalPadding
+                        );
                         row.setTypeface(
                                 null,
                                 isHeader ? Typeface.BOLD : Typeface.NORMAL
                         );
-                        row.setTextColor(
-                                isHeader ? 0xFF1D3557 : 0xFF172033
-                        );
+                        if (isHeader) {
+                            row.setTextColor(0xFF1D3557);
+                        } else if (option != null && !option.selectable) {
+                            row.setTextColor(0xFF757575);
+                        } else {
+                            row.setTextColor(0xFF172033);
+                        }
                         row.setBackgroundColor(
                                 isHeader ? 0xFFE5EDF8 : Color.WHITE
                         );
@@ -300,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
 
+        adapter.setDropDownViewResource(R.layout.torque_option_dropdown_item);
         instruction.setAdapter(adapter);
         instruction.setThreshold(0);
 
@@ -311,12 +333,22 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            instruction.setText(option.value, false);
-            instructionLayout.setHelperText(
-                    "Kaynak: " + option.sourceName
-                            + " • Bölüm: " + option.section
-                            + " • Vida: " + option.fastener
+            if (!option.selectable) {
+                return;
+            }
+
+            instruction.setText(option.numericValue, false);
+            instructionDetails.setText(
+                    "Source: " + option.sourceName
+                            + "\nSection: " + option.section
+                            + "\nDesignation: " + option.designation
+                            + " | Thread: " + option.thread
+                            + " | Grade: " + option.grade
+                            + " | Wrench size (A/F): " + option.wrenchSize
+                            + " | Tightening torque: "
+                            + option.tighteningTorque
             );
+            instructionDetails.setVisibility(View.VISIBLE);
         });
 
         instruction.addTextChangedListener(new TextWatcher() {
@@ -336,7 +368,8 @@ public class MainActivity extends AppCompatActivity {
                     int before,
                     int count
             ) {
-                instructionLayout.setHelperText(null);
+                instructionDetails.setText("");
+                instructionDetails.setVisibility(View.GONE);
             }
 
             @Override
@@ -350,39 +383,36 @@ public class MainActivity extends AppCompatActivity {
             String sourceName,
             int valuesResource
     ) {
-        for (String encodedSection : getResources().getStringArray(valuesResource)) {
-            String[] sectionParts = encodedSection.split("\\|", 2);
-            if (sectionParts.length != 2) {
+        String currentSection = null;
+        for (String encodedRow : getResources().getStringArray(valuesResource)) {
+            String[] fields = encodedRow.split("\\|", -1);
+            if (fields.length != 8) {
                 throw new IllegalStateException(
-                        "Invalid torque option section: " + encodedSection
+                        "Invalid torque option row: " + encodedRow
                 );
             }
 
-            String section = sectionParts[0];
-            options.add(
-                    InstructionOption.header(sourceName, section)
-            );
-
-            HashSet<String> sectionOptions = new HashSet<>();
-            for (String encodedOption : sectionParts[1].split(",")) {
-                String[] optionParts = encodedOption.split("@", 2);
-                if (optionParts.length != 2) {
-                    throw new IllegalStateException(
-                            "Invalid torque option: " + encodedOption
-                    );
-                }
-
-                if (sectionOptions.add(encodedOption)) {
-                    options.add(
-                            InstructionOption.value(
-                                    sourceName,
-                                    section,
-                                    optionParts[0],
-                                    optionParts[1]
-                            )
-                    );
-                }
+            String section = fields[0];
+            if (!section.equals(currentSection)) {
+                options.add(
+                        InstructionOption.header(sourceName, section)
+                );
+                currentSection = section;
             }
+
+            options.add(
+                    InstructionOption.value(
+                            sourceName,
+                            fields[0],
+                            fields[1],
+                            fields[2],
+                            fields[3],
+                            fields[4],
+                            fields[5],
+                            fields[6],
+                            Boolean.parseBoolean(fields[7])
+                    )
+            );
         }
     }
 
@@ -398,22 +428,37 @@ public class MainActivity extends AppCompatActivity {
     private static class InstructionOption {
         private final String sourceName;
         private final String section;
-        private final String fastener;
-        private final String value;
+        private final String designation;
+        private final String thread;
+        private final String grade;
+        private final String wrenchSize;
+        private final String tighteningTorque;
+        private final String numericValue;
         private final boolean isHeader;
+        private final boolean selectable;
 
         private InstructionOption(
                 String sourceName,
                 String section,
-                String fastener,
-                String value,
-                boolean isHeader
+                String designation,
+                String thread,
+                String grade,
+                String wrenchSize,
+                String tighteningTorque,
+                String numericValue,
+                boolean isHeader,
+                boolean selectable
         ) {
             this.sourceName = sourceName;
             this.section = section;
-            this.fastener = fastener;
-            this.value = value;
+            this.designation = designation;
+            this.thread = thread;
+            this.grade = grade;
+            this.wrenchSize = wrenchSize;
+            this.tighteningTorque = tighteningTorque;
+            this.numericValue = numericValue;
             this.isHeader = isHeader;
+            this.selectable = selectable;
         }
 
         private static InstructionOption header(
@@ -425,22 +470,37 @@ public class MainActivity extends AppCompatActivity {
                     section,
                     "",
                     "",
-                    true
+                    "",
+                    "",
+                    "",
+                    "",
+                    true,
+                    false
             );
         }
 
         private static InstructionOption value(
                 String sourceName,
                 String section,
-                String value,
-                String fastener
+                String designation,
+                String thread,
+                String grade,
+                String wrenchSize,
+                String tighteningTorque,
+                String numericValue,
+                boolean selectable
         ) {
             return new InstructionOption(
                     sourceName,
                     section,
-                    fastener,
-                    value,
-                    false
+                    designation,
+                    thread,
+                    grade,
+                    wrenchSize,
+                    tighteningTorque,
+                    numericValue,
+                    false,
+                    selectable
             );
         }
 
@@ -449,7 +509,11 @@ public class MainActivity extends AppCompatActivity {
             if (isHeader) {
                 return sourceName + " • " + section;
             }
-            return value + " Nm tork — " + fastener;
+            return tighteningTorque + " • Designation: " + designation
+                    + "\nThread: " + thread
+                    + " | Grade: " + grade
+                    + "\nWrench size (A/F): " + wrenchSize
+                    + " | Tightening torque: " + tighteningTorque;
         }
     }
 
