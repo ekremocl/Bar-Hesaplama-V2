@@ -1,8 +1,11 @@
 package com.plarad.calculator;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,11 +17,15 @@ public class MainActivity extends Activity {
     private EditText maxKn;
 
     private TextView result;
+    private TextView history;
 
     private Button calculate;
     private Button openD4K;
     private Button openD3K;
     private Button openITH;
+
+    private final StringBuilder calculationHistory =
+            new StringBuilder();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,7 @@ public class MainActivity extends Activity {
         maxKn = findViewById(R.id.maxKn);
 
         result = findViewById(R.id.result);
+        history = findViewById(R.id.history);
 
         calculate = findViewById(R.id.calculate);
 
@@ -89,6 +97,8 @@ public class MainActivity extends Activity {
 
         calculate.setOnClickListener(v -> {
 
+            hideKeyboard();
+
             try {
 
                 double maxBarValue =
@@ -130,23 +140,35 @@ public class MainActivity extends Activity {
                         )
                 );
 
+                calculationHistory.insert(
+                        0,
+                        String.format(
+                                "%.2f BAR\n",
+                                calculatedBar
+                        )
+                );
+
+                history.setText(
+                        calculationHistory.toString()
+                );
+
                 if (calculatedBar < 500) {
 
                     result.setTextColor(
                             0xFFFFA500
-                    ); // Turuncu
+                    );
 
                 } else if (calculatedBar < 1000) {
 
                     result.setTextColor(
                             0xFF00FF88
-                    ); // Yeşil
+                    );
 
                 } else {
 
                     result.setTextColor(
                             0xFFFF4444
-                    ); // Kırmızı
+                    );
                 }
 
             } catch (Exception e) {
@@ -160,5 +182,24 @@ public class MainActivity extends Activity {
                 );
             }
         });
+    }
+
+    private void hideKeyboard() {
+
+        View view = getCurrentFocus();
+
+        if (view != null) {
+
+            InputMethodManager imm =
+                    (InputMethodManager)
+                            getSystemService(
+                                    Context.INPUT_METHOD_SERVICE
+                            );
+
+            imm.hideSoftInputFromWindow(
+                    view.getWindowToken(),
+                    0
+            );
+        }
     }
 }
