@@ -4,11 +4,17 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -22,10 +28,11 @@ public class MainActivity extends Activity {
     private TextView history;
 
     private Button calculate;
-    private Button openD4K;
-    private Button openD3K;
-    private Button openITH;
     private Button clearHistory;
+    private Button menuButton;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     private final ArrayList<String> historyList =
             new ArrayList<>();
@@ -37,68 +44,86 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        maxBar = findViewById(R.id.maxBar);
-        instruction = findViewById(R.id.instruction);
-        maxKn = findViewById(R.id.maxKn);
+        drawerLayout =
+                findViewById(R.id.drawerLayout);
 
-        result = findViewById(R.id.result);
-        history = findViewById(R.id.history);
+        navigationView =
+                findViewById(R.id.navigationView);
+
+        menuButton =
+                findViewById(R.id.menuButton);
+
+        maxBar =
+                findViewById(R.id.maxBar);
+
+        instruction =
+                findViewById(R.id.instruction);
+
+        maxKn =
+                findViewById(R.id.maxKn);
+
+        result =
+                findViewById(R.id.result);
+
+        history =
+                findViewById(R.id.history);
+
+        calculate =
+                findViewById(R.id.calculate);
 
         clearHistory =
                 findViewById(R.id.clearHistory);
 
-        calculate = findViewById(R.id.calculate);
+        menuButton.setOnClickListener(v ->
+                drawerLayout.openDrawer(Gravity.LEFT)
+        );
 
-        openD4K = findViewById(R.id.openD4K);
-        openD3K = findViewById(R.id.openD3K);
-        openITH = findViewById(R.id.openITH);
+        navigationView.setNavigationItemSelectedListener(item -> {
 
-        openD4K.setOnClickListener(v -> {
+            int id = item.getItemId();
 
-            Intent intent =
-                    new Intent(
-                            MainActivity.this,
-                            PDFActivity.class
-                    );
+            if (id == R.id.nav_d4k) {
 
-            intent.putExtra(
-                    "pdfFile",
-                    "D4K Screw Connections.pdf"
-            );
+                openPdf(
+                        "D4K Screw Connections.pdf"
+                );
 
-            startActivity(intent);
-        });
+            } else if (id == R.id.nav_d3k) {
 
-        openD3K.setOnClickListener(v -> {
+                openPdf(
+                        "D3K Screw Connections.pdf"
+                );
 
-            Intent intent =
-                    new Intent(
-                            MainActivity.this,
-                            PDFActivity.class
-                    );
+            } else if (id == R.id.nav_ith) {
 
-            intent.putExtra(
-                    "pdfFile",
-                    "D3K Screw Connections.pdf"
-            );
+                openPdf(
+                        "ITH Tork Chart.pdf"
+                );
 
-            startActivity(intent);
-        });
+            } else if (id == R.id.nav_clear_history) {
 
-        openITH.setOnClickListener(v -> {
+                historyList.clear();
 
-            Intent intent =
-                    new Intent(
-                            MainActivity.this,
-                            PDFActivity.class
-                    );
+                history.setText("");
 
-            intent.putExtra(
-                    "pdfFile",
-                    "ITH Tork Chart.pdf"
-            );
+                Toast.makeText(
+                        MainActivity.this,
+                        "History Cleared",
+                        Toast.LENGTH_SHORT
+                ).show();
 
-            startActivity(intent);
+            } else if (id == R.id.nav_about) {
+
+                Toast.makeText(
+                        MainActivity.this,
+                        "Hydraulic Pressure Calculator v1.0",
+                        Toast.LENGTH_LONG
+                ).show();
+            }
+
+            drawerLayout.closeDrawers();
+
+            return true;
         });
 
         clearHistory.setOnClickListener(v -> {
@@ -116,17 +141,23 @@ public class MainActivity extends Activity {
 
                 double maxBarValue =
                         Double.parseDouble(
-                                maxBar.getText().toString()
+                                maxBar
+                                        .getText()
+                                        .toString()
                         );
 
                 double instructionValue =
                         Double.parseDouble(
-                                instruction.getText().toString()
+                                instruction
+                                        .getText()
+                                        .toString()
                         );
 
                 double maxKnValue =
                         Double.parseDouble(
-                                maxKn.getText().toString()
+                                maxKn
+                                        .getText()
+                                        .toString()
                         );
 
                 if (maxKnValue == 0) {
@@ -143,7 +174,8 @@ public class MainActivity extends Activity {
                 }
 
                 double calculatedBar =
-                        (maxBarValue * instructionValue)
+                        (maxBarValue
+                                * instructionValue)
                                 / maxKnValue;
 
                 result.setText(
@@ -186,19 +218,19 @@ public class MainActivity extends Activity {
 
                     result.setTextColor(
                             0xFFFFA500
-                    ); // Turuncu
+                    );
 
                 } else if (calculatedBar < 1000) {
 
                     result.setTextColor(
                             0xFF00FF88
-                    ); // Yeşil
+                    );
 
                 } else {
 
                     result.setTextColor(
                             0xFFFF4444
-                    ); // Kırmızı
+                    );
                 }
 
             } catch (Exception e) {
@@ -212,6 +244,22 @@ public class MainActivity extends Activity {
                 );
             }
         });
+    }
+
+    private void openPdf(String pdfName) {
+
+        Intent intent =
+                new Intent(
+                        MainActivity.this,
+                        PDFActivity.class
+                );
+
+        intent.putExtra(
+                "pdfFile",
+                pdfName
+        );
+
+        startActivity(intent);
     }
 
     private void hideKeyboard() {
