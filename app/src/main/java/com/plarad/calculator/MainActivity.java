@@ -3,9 +3,12 @@ package com.plarad.calculator;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,13 +18,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText maxBar;
-    private EditText instruction;
+    private MaterialAutoCompleteTextView instruction;
+    private TextInputLayout instructionLayout;
     private EditText maxKn;
 
     private TextView result;
@@ -60,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
         instruction =
                 findViewById(R.id.instruction);
 
+        instructionLayout =
+                findViewById(R.id.instructionLayout);
+
         maxKn =
                 findViewById(R.id.maxKn);
 
@@ -74,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
 
         clearHistory =
                 findViewById(R.id.clearHistory);
+
+        setupInstructionDropdown();
 
         menuButton.setOnClickListener(v ->
                 drawerLayout.openDrawer(Gravity.LEFT)
@@ -129,25 +140,13 @@ public class MainActivity extends AppCompatActivity {
             try {
 
                 double maxBarValue =
-                        Double.parseDouble(
-                                maxBar
-                                        .getText()
-                                        .toString()
-                        );
+                        parseNumber(maxBar);
 
                 double instructionValue =
-                        Double.parseDouble(
-                                instruction
-                                        .getText()
-                                        .toString()
-                        );
+                        parseNumber(instruction);
 
                 double maxKnValue =
-                        Double.parseDouble(
-                                maxKn
-                                        .getText()
-                                        .toString()
-                        );
+                        parseNumber(maxKn);
 
                 if (maxKnValue == 0) {
 
@@ -233,6 +232,104 @@ public class MainActivity extends AppCompatActivity {
                 );
             }
         });
+    }
+
+    private void setupInstructionDropdown() {
+        ArrayList<InstructionOption> options =
+                new ArrayList<>();
+
+        addInstructionOptions(
+                options,
+                "D4K",
+                R.array.d4k_instruction_values
+        );
+
+        addInstructionOptions(
+                options,
+                "D3K",
+                R.array.d3k_instruction_values
+        );
+
+        ArrayAdapter<InstructionOption> adapter =
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_dropdown_item_1line,
+                        options
+                );
+
+        instruction.setAdapter(adapter);
+        instruction.setThreshold(0);
+
+        instruction.setOnItemClickListener((parent, view, position, id) -> {
+            InstructionOption option =
+                    (InstructionOption) parent.getItemAtPosition(position);
+
+            instruction.setText(option.value, false);
+            instructionLayout.setHelperText(
+                    "Seçilen kaynak: " + option.model
+            );
+        });
+
+        instruction.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    CharSequence s,
+                    int start,
+                    int count,
+                    int after
+            ) {
+            }
+
+            @Override
+            public void onTextChanged(
+                    CharSequence s,
+                    int start,
+                    int before,
+                    int count
+            ) {
+                instructionLayout.setHelperText(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+    private void addInstructionOptions(
+            ArrayList<InstructionOption> options,
+            String model,
+            int valuesResource
+    ) {
+        for (String value : getResources().getStringArray(valuesResource)) {
+            options.add(
+                    new InstructionOption(model, value)
+            );
+        }
+    }
+
+    private double parseNumber(EditText input) {
+        return Double.parseDouble(
+                input.getText()
+                        .toString()
+                        .trim()
+                        .replace(',', '.')
+        );
+    }
+
+    private static class InstructionOption {
+        private final String model;
+        private final String value;
+
+        private InstructionOption(String model, String value) {
+            this.model = model;
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return value + " Nm - " + model;
+        }
     }
 
     private void openPdf(String pdfName) {

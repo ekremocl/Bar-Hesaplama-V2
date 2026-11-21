@@ -70,6 +70,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/instructionLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -80,11 +81,12 @@
                     app:boxCornerRadiusBottomStart="12dp"
                     app:boxCornerRadiusTopEnd="12dp"
                     app:boxCornerRadiusTopStart="12dp"
+                    app:endIconMode="dropdown_menu"
                     app:boxStrokeColor="#1565C0"
                     app:hintTextAppearance="@style/CalculatorInputLabel"
                     app:hintTextColor="#26364A">
 
-                    <com.google.android.material.textfield.TextInputEditText
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/instruction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
